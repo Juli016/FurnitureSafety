@@ -1,0 +1,264 @@
+{
+  "Furnitures": [
+    {
+      "Name": "TV",
+      "State": [ "Open", "Closed" ],
+      "InitState": "Closed",
+      "Variables": [
+        {
+          "Name": "volumn",
+          "Type": "int",
+          "Range": "1..10",
+          "InitVal": ""
+        }
+      ],
+      "Actions": [
+        {
+          "Name": "closeTV",
+          "StartState": [ "Open" ],
+          "EndState": "Closed",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "openTV",
+          "StartState": [ "Closed" ],
+          "EndState": "Open",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "SwitchToVolumn1",
+          "StartState": [ ],
+          "EndState": [ ],
+          "Transitions": [
+            {
+              "val": "volumn",
+              "result": "1"
+            }
+          ]
+        }
+      ],
+      "InternalRules": [
+
+      ]
+    },
+
+    {
+      "Name": "AirConditioner",
+      "State": [ "WarmWind", "ColdWind", "Refresh", "Closed" ],
+      "InitState": "Closed",
+      "Variables": [
+        {
+          "Name": "speed",
+          "Type": "enum",
+          "Range": "high, medium, low",
+          "InitVal": ""
+        }
+      ],
+      "Actions": [
+        {
+          "Name": "blowWarmBreeze",
+          "StartState": [ "Closed", "Refresh", "ColdWind" ],
+          "EndState": "WarmWind",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "blowColdBreeze",
+          "StartState": [ "WarmWind", "Closed", "Refresh" ],
+          "EndState": "ColdWind",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "refreshAir",
+          "StartState": [ "WarmWind", "Closed", "ColdWind" ],
+          "EndState": "Refresh",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "CloseAirConditioner",
+          "StartState": [ "WarmWind", "ColdWind", "Refresh" ],
+          "EndState": "Closed",
+          "Transitions": [
+
+          ]
+        }
+      ],
+      "InternalRules": [
+
+      ]
+    },
+
+    {
+      "Name": "SmokeDetector",
+      "State": [ "Alarm", "Normal" ],
+      "InitState": "Normal",
+      "Variables": [
+        {
+          "Name": "smokeDensity",
+          "Type": "int",
+          "Range": "0..50",
+          "InitVal": "0"
+        }
+      ],
+      "Actions": [
+        {
+          "Name": "startAlarm",
+          "StartState": [ "Normal" ],
+          "EndState": "Alarm",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "endAlarm",
+          "StartState": [ "Alarm" ],
+          "EndState": "Normal",
+          "Transitions": [
+
+          ]
+        }
+      ],
+      "InternalRules": [
+        {
+          "Val": "smokeDensity",
+          "Condition": ">20",
+          "Action": "startAlarm"
+        },
+        {
+          "Val": "smokeDensity",
+          "Condition": "<=20",
+          "Action": "endAlarm"
+        }
+      ]
+    },
+
+    {
+      "Name": "AlarmClock",
+      "State": [ "Alarm", "Queit" ],
+      "InitState": "Queit",
+      "Variables": [
+        {
+          "Name": "Time",
+          "Type": "int",
+          "Range": "0..23",
+          "InitVal": ""
+        }
+      ],
+      "Actions": [
+        {
+          "Name": "startAlarm",
+          "StartState": [ "Queit" ],
+          "EndState": "Alarm",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "endAlarm",
+          "StartState": [ "Alarm" ],
+          "EndState": "Queit",
+          "Transitions": [
+
+          ]
+        }
+      ],
+      "InternalRules": [
+
+      ]
+    },
+
+    {
+      "Name": "Thermometer",
+      "State": [ "S0" ],
+      "InitState": "S0",
+      "Variables": [
+        {
+          "Name": "temperature",
+          "Type": "int",
+          "Range": "-5..40",
+          "InitVal": ""
+        }
+      ],
+      "Actions": [
+
+      ],
+      "InternalRules": [
+
+      ]
+    },
+
+    {
+      "Name": "Light",
+      "State": [ "On", "Off" ],
+      "InitState": "Off",
+      "Variables": [
+        {
+          "Name": "Degree",
+          "Type": "enum",
+          "Range": "high, medium, low",
+          "InitVal": ""
+        }
+      ],
+      "Actions": [
+        {
+          "Name": "OpenLight",
+          "StartState": [ "Off" ],
+          "EndState": "On",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "closeLight",
+          "StartState": [ "On" ],
+          "EndState": "Off",
+          "Transitions": [
+
+          ]
+        }
+      ],
+      "InternalRules": [
+
+      ]
+    },
+
+    {
+      "Name": "Door",
+      "State": [ "Open", "Closed" ],
+      "InitState": "",
+      "Variables": [
+
+      ],
+      "Actions": [
+        {
+          "Name": "openDoor",
+          "StartState": [ "Closed" ],
+          "EndState": "Open",
+          "Transitions": [
+
+          ]
+        },
+        {
+          "Name": "closeDoor",
+          "StartState": [ "Open" ],
+          "EndState": "Closed",
+          "Transitions": [
+
+          ]
+        }
+      ],
+      "InternalRules": [
+
+      ]
+    }
+  ]
+}
