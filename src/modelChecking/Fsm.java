@@ -7,7 +7,7 @@ public class Fsm
 	
 	// 假设我收到的json被组织成这样的格式，方便我后期建模
 	public void test()
-	{
+	{	
 		F_Array = new Furniture[7];
 		F_Array[0].furname = "TV";
 		F_Array[0].StateArr = new String[]{"Open", "Closed"};
@@ -28,6 +28,7 @@ public class Fsm
 		F_Array[0].actionArr[1].endState = "Open";
 		
 		F_Array[0].actionArr[2].actionName = "SwitchToVolumn1";
+		F_Array[0].actionArr[1].endState = "Open";
 		F_Array[0].actionArr[2].trans = new TransVar[1];
 		F_Array[0].actionArr[2].trans[0].val = "volumn";
 		F_Array[0].actionArr[2].trans[0].valRst = "1";

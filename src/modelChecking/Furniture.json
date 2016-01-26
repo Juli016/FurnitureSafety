@@ -32,7 +32,7 @@
         {
           "Name": "SwitchToVolumn1",
           "StartState": [ ],
-          "EndState": [ ],
+          "EndState": "Closed",
           "Transitions": [
             {
               "val": "volumn",
@@ -98,7 +98,7 @@
     },
 
     {
-      "Name": "SmokeDetector",
+      "Name": "SmokeDetector",            // action有待修改，不应作为接口
       "State": [ "Alarm", "Normal" ],
       "InitState": "Normal",
       "Variables": [
@@ -142,9 +142,9 @@
     },
 
     {
-      "Name": "AlarmClock",
-      "State": [ "Alarm", "Queit" ],
-      "InitState": "Queit",
+      "Name": "AlarmClock",             // time有待修改，可自增自减
+      "State": [ "Alarm", "Quiet" ],
+      "InitState": "Quiet",
       "Variables": [
         {
           "Name": "Time",
@@ -156,7 +156,7 @@
       "Actions": [
         {
           "Name": "startAlarm",
-          "StartState": [ "Queit" ],
+          "StartState": [ "Quiet" ],
           "EndState": "Alarm",
           "Transitions": [
 
@@ -165,7 +165,7 @@
         {
           "Name": "endAlarm",
           "StartState": [ "Alarm" ],
-          "EndState": "Queit",
+          "EndState": "Quiet",
           "Transitions": [
 
           ]
@@ -178,8 +178,8 @@
 
     {
       "Name": "Thermometer",
-      "State": [ "S0" ],
-      "InitState": "S0",
+      "State": [ "Open" ],
+      "InitState": "Open",
       "Variables": [
         {
           "Name": "temperature",
