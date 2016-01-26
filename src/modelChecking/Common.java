@@ -39,8 +39,8 @@ class Action
 
 class Furniture
 {
-	String furname;					// 家具名称
-	String curState;				// 家具当前状态编号
+	String furname;			// 家具名称
+	String curState;			// 家具当前状态编号
 	String initState;				// 家具初始状态，如没有为空字符串
 
 	String[] StateArr;				// 所有的状态列表
