@@ -32,7 +32,7 @@
         {
           "Name": "SwitchToVolumn1",
           "StartState": [ ],
-          "EndState": "Closed",
+          "EndState": "Open",
           "Transitions": [
             {
               "val": "volumn",
