@@ -5,9 +5,49 @@ public class Fsm
 	public Furniture[] F_Array;
 	public Rule[] commonRules;
 	
-	// ¼ÙÉèÎÒÊÕµ½µÄjson±»×éÖ¯³ÉÕâÑùµÄ¸ñÊ½£¬·½±ãÎÒºóÆÚ½¨Ä£
+	// å‡è®¾æˆ‘æ”¶åˆ°çš„jsonè¢«ç»„ç»‡æˆè¿™æ ·çš„æ ¼å¼ï¼Œæ–¹ä¾¿æˆ‘åæœŸå»ºæ¨¡
 	public void init()
-	{	
+	{
+		commonRules = new Rule[6];
+		for(int i = 0; i < 6; ++i)
+			commonRules[i] = new Rule();
+	
+		commonRules[0].srcFur = 6;
+		commonRules[0].srcVar = "Mode";
+		commonRules[0].condition = "=Open";
+		commonRules[0].dstFur = 5;
+		commonRules[0].dstAction = "OpenLight";
+
+		commonRules[1].srcFur = 4;
+		commonRules[1].srcVar = "temperature";
+		commonRules[1].condition = ">35";
+		commonRules[1].dstFur = 1;
+		commonRules[1].dstAction = "blowColdBreeze";
+		
+		commonRules[2].srcFur = 4;
+		commonRules[2].srcVar = "temperature";
+		commonRules[2].condition = "<10";
+		commonRules[2].dstFur = 1;
+		commonRules[2].dstAction = "blowWarmBreeze";
+		
+		commonRules[3].srcFur = 2;
+		commonRules[3].srcVar = "Mode";
+		commonRules[3].condition = "=Alarm";
+		commonRules[3].dstFur = 1;
+		commonRules[3].dstAction = "refreshAir";
+		
+		commonRules[4].srcFur = 2;
+		commonRules[4].srcVar = "Mode";
+		commonRules[4].condition = "=Alarm";
+		commonRules[4].dstFur = 3;
+		commonRules[4].dstAction = "startAlarm";
+		
+		commonRules[5].srcFur = 6;
+		commonRules[5].srcVar = "Mode";
+		commonRules[5].condition = "=Open";
+		commonRules[5].dstFur = 0;
+		commonRules[5].dstAction = "SwitchToVolumn1";
+		
 		F_Array = new Furniture[7];
 		for(int i = 0; i < 7; i++)
 			F_Array[i]=new Furniture();
@@ -20,7 +60,7 @@ public class Fsm
 		F_Array[0].variArr[0] = new Variable();
 		F_Array[0].variArr[0].varName = "volumn";
 		F_Array[0].variArr[0].varType = 0;
-		F_Array[0].variArr[0].rage = "0..10";
+		F_Array[0].variArr[0].rage = "1..10";
 		
 		F_Array[0].actionArr = new Action[3];
 		for(int i = 0; i < 3; i++)
@@ -34,7 +74,8 @@ public class Fsm
 		F_Array[0].actionArr[1].endState = "Open";
 		
 		F_Array[0].actionArr[2].actionName = "SwitchToVolumn1";
-		F_Array[0].actionArr[1].endState = "Open";
+		F_Array[0].actionArr[1].startState = new String[]{"Open","Closed"};
+		F_Array[0].actionArr[2].endState = "Open";
 		F_Array[0].actionArr[2].trans = new TransVar[1];
 		F_Array[0].actionArr[2].trans[0] = new TransVar();
 		F_Array[0].actionArr[2].trans[0].val = "volumn";
@@ -96,16 +137,13 @@ public class Fsm
 		F_Array[2].internRules = new Rule[2];
 		for(int i = 0; i < 2; ++i)
 			F_Array[2].internRules[i] = new Rule();
-		F_Array[2].internRules[0].srcFur = 2;
+		
 		F_Array[2].internRules[0].srcVar = "smokeDensity";
 		F_Array[2].internRules[0].condition = ">20";
-		F_Array[2].internRules[0].dstFur = 2;
 		F_Array[2].internRules[0].dstAction = "startAlarm";
 		
-		F_Array[2].internRules[1].srcFur = 2;
 		F_Array[2].internRules[1].srcVar = "smokeDensity";
 		F_Array[2].internRules[1].condition = "<=20";
-		F_Array[2].internRules[1].dstFur = 2;
 		F_Array[2].internRules[1].dstAction = "endAlarm";
 		
 		
@@ -132,8 +170,8 @@ public class Fsm
 		
 		
 		F_Array[4].furname = "Thermometer";
-		F_Array[4].StateArr = new String[]{"Open"};
-		F_Array[4].initState = "Open";
+		F_Array[4].StateArr = new String[]{"On","Off"};
+		F_Array[4].initState = "On";
 		
 		F_Array[4].variArr = new Variable[1];
 		F_Array[4].variArr[0] = new Variable();
