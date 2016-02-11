@@ -1,0 +1,99 @@
+MODULE TV
+VAR
+	Mode: {Open,Closed};
+	volumn: 1..10;
+ASSIGN
+	init(Mode) := Closed;
+
+MODULE AirConditioner
+VAR
+	Mode: {WarmWind,ColdWind,Refresh,Closed};
+	speed: {high, medium, low};
+ASSIGN
+	init(Mode) := Closed;
+
+MODULE SmokeDetector
+VAR
+	Mode: {Alarm,Normal};
+	smokeDensity: 0..50;
+ASSIGN
+	init(Mode) := Normal;
+	init(smokeDensity) := 0;
+
+MODULE AlarmClock
+VAR
+	Mode: {Alarm,Quiet};
+	Time: 0..23;
+ASSIGN
+	init(Mode) := Quiet;
+
+MODULE Thermometer
+VAR
+	Mode: {On,Off};
+	temperature: -5..40;
+ASSIGN
+	init(Mode) := On;
+
+MODULE Light
+VAR
+	Mode: {On,Off};
+	Degree: {high, medium, low};
+ASSIGN
+	init(Mode) := Off;
+
+MODULE Door
+VAR
+	Mode: {Open,Closed};
+ASSIGN
+
+MODULE main
+VAR
+	_0: TV;
+	_1: AirConditioner;
+	_2: SmokeDetector;
+	_3: AlarmClock;
+	_4: Thermometer;
+	_5: Light;
+	_6: Door;
+ASSIGN
+	next(_0.Mode):=
+	case
+		(_6.Mode=Open):Open;
+		TRUE:_0.Mode;
+	esac;
+
+	next(_0.volumn):=
+	case
+		(_6.Mode=Open):1;
+		TRUE:_0.volumn;
+	esac;
+
+	next(_1.Mode):=
+	case
+		(_4.temperature>35)&(_1.Mode=WarmWind|_1.Mode=Closed|_1.Mode=Refresh):ColdWind;
+		(_4.temperature<10)&(_1.Mode=Closed|_1.Mode=Refresh|_1.Mode=ColdWind):WarmWind;
+		(_2.Mode=Alarm)&(_1.Mode=WarmWind|_1.Mode=Closed|_1.Mode=ColdWind):Refresh;
+		TRUE:_1.Mode;
+	esac;
+
+	next(_2.Mode):=
+	case
+		(_2.smokeDensity>20)&(_2.Mode=Normal):Alarm;
+		(_2.smokeDensity<=20)&(_2.Mode=Alarm):Normal;
+		TRUE:_2.Mode;
+	esac;
+
+	next(_3.Mode):=
+	case
+		(_2.Mode=Alarm)&(_3.Mode=Quiet):Alarm;
+		TRUE:_3.Mode;
+	esac;
+
+	next(_5.Mode):=
+	case
+		(_6.Mode=Open)&(_5.Mode=Off):On;
+		TRUE:_5.Mode;
+	esac;
+
+CTLSPEC AG(_2.Mode = Alarm -> AX(_1.Mode = Refresh));
+CTLSPEC AG(_2.Mode = Alarm -> AX(_3.Mode = Alarm));
