@@ -155,6 +155,7 @@ public class Convert2Smv {
 			for(int j = 0; j < numOfVari; ++j)
 				tf[i].tv[j] = new TransVari();
 			
+			//the first variable of it is Mode
 			tf[i].tv[0].varName = "Mode";
 			if(fsm.F_Array[i].variArr != null)
 			{
@@ -176,6 +177,7 @@ public class Convert2Smv {
 					int n = findAction(i, action);
 					
 					String transMode = null;
+					
 					//对起始状态有要求
 					if(fsm.F_Array[i].actionArr[n].startState != null)
 					{
@@ -196,7 +198,8 @@ public class Convert2Smv {
 					tmp.Mode = transMode;
 					tmp.condition = Condition;
 					tmp.next = fsm.F_Array[i].actionArr[n].endState;
-					tf[i].tv[0].tnList.add(tmp);
+					if(tmp.next != null)
+						tf[i].tv[0].tnList.add(tmp);
 					
 					if(fsm.F_Array[i].actionArr[n].trans != null)
 					{
@@ -248,7 +251,8 @@ public class Convert2Smv {
 				tmp.Mode = transMode;
 				tmp.condition = Condition;
 				tmp.next = fsm.F_Array[dstNO].actionArr[n].endState;
-				tf[dstNO].tv[0].tnList.add(tmp);
+				if(tmp.next != null)
+					tf[dstNO].tv[0].tnList.add(tmp);
 				
 				if(fsm.F_Array[dstNO].actionArr[n].trans != null)
 				{
@@ -296,36 +300,6 @@ public class Convert2Smv {
 					output.print("\t\tTRUE:");
 					output.print(getNO(i)+tf[i].tv[j].varName);
 					output.print(";\r\n");
-					
-	/*				if(j == 0)
-					{
-						output.print("{");
-						output.print(fsm.F_Array[i].StateArr[0]);
-						for(int k = 1; k < fsm.F_Array[i].StateArr.length; ++k)
-						{
-							output.print(",");
-							output.print(fsm.F_Array[i].StateArr[k]);
-						}
-						output.print("};\r\n");
-					}
-					else
-					{
-						switch(fsm.F_Array[i].variArr[j-1].varType)
-						{
-						case 0:
-							output.print(fsm.F_Array[i].variArr[j-1].rage);
-							break;
-						case 1:
-							output.printf("{%s}", fsm.F_Array[i].variArr[j-1].rage);
-							break;
-						case 2:
-							output.print("{TRUE,FALSE}");
-							break;
-						default:
-							System.out.println("Wrong variable type!");
-						}
-						output.print(";\r\n");
-					}*/
 					output.printf("\tesac;\r\n\r\n");
 					
 				}
@@ -342,6 +316,8 @@ public class Convert2Smv {
 			outMain(output);
 			output.print("CTLSPEC AG(_2.Mode = Alarm -> AX(_1.Mode = Refresh));\r\n");
 			output.print("CTLSPEC AG(_2.Mode = Alarm -> AX(_3.Mode = Alarm));\r\n");
+			output.print("CTLSPEC AG((_3.Time > 22 | _3.Time < 6) -> AX(_5.Mode = Closed));\r\n");
+			output.print("CTLSPEC AG((_3.Time > 22 | _3.Time < 6) -> AX(_0.Mode = Closed));\r\n");
 			output.close();
 		} catch (FileNotFoundException e) {
 			// TODO 自动生成的 catch 块
