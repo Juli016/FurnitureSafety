@@ -31,7 +31,7 @@
         },
         {
           "Name": "SwitchToVolumn1",
-          "StartState": [ ],
+          "StartState": [ "Open", "Closed" ],
           "EndState": "Open",
           "Transitions": [
             {
@@ -98,7 +98,7 @@
     },
 
     {
-      "Name": "SmokeDetector",            // actionÓĞ´ıĞŞ¸Ä£¬²»Ó¦×÷Îª½Ó¿Ú
+      "Name": "SmokeDetector",            // actionæœ‰å¾…ä¿®æ”¹ï¼Œä¸åº”ä½œä¸ºæ¥å£
       "State": [ "Alarm", "Normal" ],
       "InitState": "Normal",
       "Variables": [
@@ -142,7 +142,7 @@
     },
 
     {
-      "Name": "AlarmClock",             // timeÓĞ´ıĞŞ¸Ä£¬¿É×ÔÔö×Ô¼õ
+      "Name": "AlarmClock",             // timeæœ‰å¾…ä¿®æ”¹ï¼Œå¯è‡ªå¢è‡ªå‡
       "State": [ "Alarm", "Quiet" ],
       "InitState": "Quiet",
       "Variables": [
@@ -178,8 +178,8 @@
 
     {
       "Name": "Thermometer",
-      "State": [ "Open" ],
-      "InitState": "Open",
+      "State": [ "On", "Off" ],
+      "InitState": "On",
       "Variables": [
         {
           "Name": "temperature",
