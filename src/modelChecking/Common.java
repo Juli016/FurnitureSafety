@@ -1,12 +1,12 @@
 package modelChecking;
 
 class Rule {
-	int srcFur;				// ifÓï¾äºó¼Ò¾ßµÄ±àºÅ
-	String srcVar;			// µÚÒ»¸ö¼Ò¾ßÄ³¸öÊôĞÔÃû³Æ
-	String condition;		// µÚÒ»¸ö¼Ò¾ßÂú×ãµÄÌõ¼ş
+	int srcFur;				// ifè¯­å¥åå®¶å…·çš„ç¼–å·
+	String srcVar;			// ç¬¬ä¸€ä¸ªå®¶å…·æŸä¸ªå±æ€§åç§°
+	String condition;		// ç¬¬ä¸€ä¸ªå®¶å…·æ»¡è¶³çš„æ¡ä»¶
 	
-	int dstFur;				// thenÓï¾äºóµÄ¼Ò¾ß±àºÅ
-	String dstAction;		// µÚ¶ş¸ö¼Ò¾ßÖ´ĞĞµÄactionÃû³Æ
+	int dstFur;				// thenè¯­å¥åçš„å®¶å…·ç¼–å·
+	String dstAction;		// ç¬¬äºŒä¸ªå®¶å…·æ‰§è¡Œçš„actionåç§°
 }
 
 class Spec {
@@ -15,51 +15,36 @@ class Spec {
 
 class Variable
 {
-	String varName;		// ±äÁ¿Ãû³Æ
-	int varType;		// ±äÁ¿ÀàĞÍ£¬(0ÎªintĞÍ£¬1ÎªenumĞÍ£¬2ÎªbooleanĞÍ)
-	String rage;		// ±äÁ¿·¶Î§
+	String varName;		// å˜é‡åç§°
+	int varType;		// å˜é‡ç±»å‹ï¼Œ(0ä¸ºintå‹ï¼Œ1ä¸ºenumå‹ï¼Œ2ä¸ºbooleanå‹)
+	String rage;		// å˜é‡èŒƒå›´
 
-	String initVal;		// ³õÊ¼»¯Öµ£¬ÈôÃ»ÓĞ³õÊ¼»¯ÖµÎª¿Õ×Ö·û´®
-	String curVal;		// µ±Ç°È¡Öµ
+	String initVal;		// åˆå§‹åŒ–å€¼ï¼Œè‹¥æ²¡æœ‰åˆå§‹åŒ–å€¼ä¸ºç©ºå­—ç¬¦ä¸²
+	String curVal;		// å½“å‰å–å€¼
 }
 
-class TransVar			// ÔÚactionÖĞ¸Ä±ävariableµÄÖµ
+class TransVar			// åœ¨actionä¸­æ”¹å˜variableçš„å€¼
 {
-	String val;			// Òª¸Ä±äµÄ¼Ò¾ß±äÁ¿ÔÚvariArrÖĞµÄÃû³Æ
-	String valRst;		// ¸Ä±äºóµÄÖµ
+	String val;			// è¦æ”¹å˜çš„å®¶å…·å˜é‡åœ¨variArrä¸­çš„åç§°
+	String valRst;		// æ”¹å˜åçš„å€¼
 }
 
 class Action
 {
-	String actionName;			// actionÃû³Æ 
-	String[] startState;		// ÆğÊ¼µÄState
-	String endState;			// ½áÊøµÄState
-	TransVar[] trans;			// Ö´ĞĞµÄtransitions
+	String actionName;			// actionåç§° 
+	String[] startState;		// èµ·å§‹çš„State
+	String endState;			// ç»“æŸçš„State
+	TransVar[] trans;			// æ‰§è¡Œçš„transitions
 }
 
 class Furniture
 {
-	String furname;			// ¼Ò¾ßÃû³Æ
-	String curState;			// ¼Ò¾ßµ±Ç°×´Ì¬±àºÅ
-	String initState;				// ¼Ò¾ß³õÊ¼×´Ì¬£¬ÈçÃ»ÓĞÎª¿Õ×Ö·û´®
+	String furname;			// å®¶å…·åç§°
+	String curState;			// å®¶å…·å½“å‰çŠ¶æ€ç¼–å·
+	String initState;				// å®¶å…·åˆå§‹çŠ¶æ€ï¼Œå¦‚æ²¡æœ‰ä¸ºç©ºå­—ç¬¦ä¸²
 
-	String[] StateArr;				// ËùÓĞµÄ×´Ì¬ÁĞ±í
-	Variable[] variArr;				// ËùÓĞµÄÄÚ²¿±äÁ¿
-	Action[] actionArr;				// ¿ÉÒÔÖ´ĞĞµÄactionÁĞ±í
-	Rule[] internRules;				// ÄÚ²¿¹æÔò
-}
-
-public class Common {
-	public native boolean Check(Rule[] R_Array, Spec[] S_Array, Furniture[] F_Array);
-	private static Rule[] R_Array;
-	private static Spec[] S_Array;
-	private static Furniture[] F_Array;
-
-	static {
-		System.loadLibrary("Check");
-	}
-
-	public static void main(String[] args) {
-		new Common().Check(R_Array, S_Array, F_Array);
-	}	
+	String[] StateArr;				// æ‰€æœ‰çš„çŠ¶æ€åˆ—è¡¨
+	Variable[] variArr;				// æ‰€æœ‰çš„å†…éƒ¨å˜é‡
+	Action[] actionArr;				// å¯ä»¥æ‰§è¡Œçš„actionåˆ—è¡¨
+	Rule[] internRules;				// å†…éƒ¨è§„åˆ™
 }
